@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectionInfo.cs" />
     <Compile Include="ConnectorSettings.cs" />
     <Compile Include="Dynamic.cs" />
     <Compile Include="Entities\Hardware.cs" />

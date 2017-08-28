@@ -12,14 +12,14 @@ namespace SamanageConnector
 	public class QueryProcessor
 	{
 
-		private readonly IDictionary<string, string> ConnectionInfo;
+		private readonly IDictionary<string, string> connectionInfo;
 		private readonly ISamanageClient samanageClient = new SamanageClient();
 		private const string AccessToken = "Bearer " + info.accessToken;
 
-		public QueryProcessor(IDictionary<string, string> ConnectionInfo, ISamanageClient SamanageClient)
+		public QueryProcessor(IDictionary<string, string> connectionInfo, ISamanageClient SamanageClient)
 		{
 
-			this.ConnectionInfo = ConnectionInfo;
+			this.connectionInfo = connectionInfo;
 			this.samanageClient = SamanageClient;
 
 		}
@@ -53,7 +53,7 @@ namespace SamanageConnector
 
 			List<Hardware> Hardware = new List<Hardware>();
 
-			var hardware = samanageClient.GetHardware(ConnectionInfo[AccessToken]);
+			var hardware = samanageClient.GetHardware(connectionInfo[AccessToken]);
 			return hardware.AsQueryable();
 
 		}
