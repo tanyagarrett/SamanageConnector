@@ -29,7 +29,8 @@ namespace SamanageConnector
 	public class Connector : IConnector
 	{
 		public bool IsConnected { get; private set; }
-		public readonly SamanageClient info = new SamanageClient();
+        //public readonly SamanageClient info = new SamanageClient(); //let's store in its own class
+        public readonly ConnectionInfo info = new ConnectionInfo();
         private readonly Guid connectorTypeId = new Guid(ConnectorSettings.ConnectorTypeId);
 
         protected QueryProcessor QueryProcessor { get; set; }
@@ -50,7 +51,7 @@ namespace SamanageConnector
                                         InputType = InputType.Text,
                                         IsRequired = true,
                                         Label = "API Token",
-                                        PropertyName = "AccessToken"
+                                        PropertyName = "accessToken"
                                     },
                             }
             };
@@ -116,6 +117,7 @@ namespace SamanageConnector
 
 				try
 				{
+                    //pass in the info.accessToken here?
 					entities = QueryProcessor.ExecuteQuery(query);
 				}
 				catch (Exception exception)

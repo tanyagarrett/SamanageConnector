@@ -8,18 +8,23 @@ using SamanageConnector.Entities;
 
 namespace SamanageConnector
 {
-
 	public class QueryProcessor
 	{
+        public Connector Connector;
 
-		private readonly IDictionary<string, string> ConnectionInfo;
+        public QueryProcessor(Connector connector)
+        {
+            Connector = connector;
+        }
+
+		private readonly IDictionary<string, string> connectionInfo;
 		private readonly ISamanageClient samanageClient = new SamanageClient();
-		private const string AccessToken = "Bearer " + "info.accessToken"; //Need to get access token from Samanage Client
+		private const string AccessToken = "Bearer " + "info.accessToken"; //needs updated
 
-		public QueryProcessor(IDictionary<string, string> ConnectionInfo, ISamanageClient SamanageClient)
+		public QueryProcessor(IDictionary<string, string> connectionInfo, ISamanageClient SamanageClient)
 		{
 
-			this.ConnectionInfo = ConnectionInfo;
+			this.connectionInfo = connectionInfo;
 			this.samanageClient = SamanageClient;
 
 		}
@@ -53,7 +58,7 @@ namespace SamanageConnector
 
 			List<Hardware> Hardware = new List<Hardware>();
 
-			var hardware = samanageClient.GetHardware(ConnectionInfo[AccessToken]);
+			var hardware = samanageClient.GetHardware(connectionInfo[AccessToken]);
 			return hardware.AsQueryable();
 
 		}
