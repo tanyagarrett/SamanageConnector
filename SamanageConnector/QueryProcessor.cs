@@ -14,7 +14,7 @@ namespace SamanageConnector
 
 		private readonly IDictionary<string, string> ConnectionInfo;
 		private readonly ISamanageClient samanageClient = new SamanageClient();
-		private const string AccessToken = "Bearer " + "info.accessToken"; //Need to get access token from Samanage Client
+		private const string AccessToken = "Bearer " + info.accessToken;
 
 		public QueryProcessor(IDictionary<string, string> ConnectionInfo, ISamanageClient SamanageClient)
 		{

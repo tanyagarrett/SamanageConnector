@@ -21,7 +21,7 @@ namespace SamanageConnector
 	{
 
 		public bool IsConnected { get; private set; }
-		public readonly SamanageClient info = new SamanageClient();
+		public readonly ConnectionInfo info = new ConnectionInfo();
 
 		protected QueryProcessor QueryProcessor { get; set; }
 		protected OperationProcessor OperationProcessor { get; set; }

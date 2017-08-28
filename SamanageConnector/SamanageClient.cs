@@ -13,10 +13,6 @@ namespace SamanageConnector
 		internal const string OAuthHeader = "OAuth oauth_token={0}";
 		internal const string computerListUri = "https://api.samanage.com/hardwares.json";
 
-		public string baseURL = "https://api.samanage.com";
-		public string accessToken { get; set; }
-
-
 		public List<Hardware> GetHardware(string accessToken)
 		{
 			var hardwareUri = string.Format(computerListUri);

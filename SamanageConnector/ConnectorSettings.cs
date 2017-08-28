@@ -21,4 +21,11 @@ namespace SamanageConnector
 		public const bool SupportsCloud = true;
 
 	}
+
+	public class ConnectionInfo
+	{
+		public string baseURL = "https://api.samanage.com";
+		public string accessToken { get; set; }
+	}
+
 }
