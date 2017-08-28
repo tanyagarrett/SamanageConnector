@@ -11,34 +11,68 @@ using Scribe.Core.ConnectorApi.Exceptions;
 
 namespace SamanageConnector
 {
+	[ScribeConnector(
+        ConnectorSettings.ConnectorTypeId,
+        ConnectorSettings.Name,
+        ConnectorSettings.Description,
+		typeof(Connector),
+        ConnectorSettings.SettingsUITypeName,
+        ConnectorSettings.SettingsUIVersion,
+        ConnectorSettings.ConnectionUITypeName,
+        ConnectorSettings.ConnectionUIVersion,
+        ConnectorSettings.XapFileName,
+		new[] { "Scribe.IS.Target", "Scribe.IS.Source" },
+        ConnectorSettings.SupportsCloud, 
+		ConnectorSettings.ConnectorVersion
+    )]
 
-	[ScribeConnector(ConnectorSettings.ConnectorTypeId,ConnectorSettings.Name,ConnectorSettings.Description,
-		typeof(Connector),ConnectorSettings.SettingsUITypeName,ConnectorSettings.SettingsUIVersion,
-		ConnectorSettings.ConnectionUITypeName,ConnectorSettings.ConnectionUIVersion,ConnectorSettings.XapFileName,
-		new[] { "Scribe.IS.Target", "Scribe.IS.Source" },ConnectorSettings.SupportsCloud, 
-		ConnectorSettings.ConnectorVersion)]
 	public class Connector : IConnector
 	{
-
 		public bool IsConnected { get; private set; }
 		public readonly SamanageClient info = new SamanageClient();
+        private readonly Guid connectorTypeId = new Guid(ConnectorSettings.ConnectorTypeId);
 
-		protected QueryProcessor QueryProcessor { get; set; }
+        protected QueryProcessor QueryProcessor { get; set; }
 		protected OperationProcessor OperationProcessor { get; set; }
 
-		public void Connect(IDictionary<string, string> properties)
+        public string PreConnect(IDictionary<string, string> properties)
+        {
+            var form = new FormDefinition
+            {
+                CompanyName = "Samanage Software",
+                CryptoKey = ConnectorSettings.cryptoKey,
+                HelpUri = new Uri("http://www.samanage.com/api"),
+                Entries =
+                    new Collection<EntryDefinition>
+                            {
+                                new EntryDefinition
+                                    {
+                                        InputType = InputType.Text,
+                                        IsRequired = true,
+                                        Label = "API Token",
+                                        PropertyName = "AccessToken"
+                                    },
+                            }
+            };
+            return form.Serialize();
+        }
+
+        public void Connect(IDictionary<string, string> properties)
 		{
 
 			info.accessToken = properties["AccessToken"];
 			this.IsConnected = true;
 		}
 
-		public Guid ConnectorTypeId
-		{
-			get { return new Guid(ConnectorSettings.ConnectorTypeId); }
-		}
+        public Guid ConnectorTypeId
+        {
+            get
+            {
+                return connectorTypeId;
+            }
+        }
 
-		public void Disconnect()
+        public void Disconnect()
 		{
 			this.IsConnected = false;
 		}
@@ -137,33 +171,7 @@ namespace SamanageConnector
 					severity = Logger.Severity.Error;
 				}
 			}
-
 			Logger.Write(severity, "Rest CDK", message);
-
-		}
-
-		public string PreConnect(IDictionary<string, string> properties)
-		{
-			var form = new FormDefinition
-			{
-				CompanyName = "Samanage Software",
-				CryptoKey = "1",
-				HelpUri = new Uri("http://www.samanage.com/api"),
-				Entries =
-					new Collection<EntryDefinition>
-							{
-
-								new EntryDefinition
-									{
-										InputType = InputType.Text,
-										IsRequired = true,
-										Label = "API Token",
-										PropertyName = "AccessToken"
-									}
-							}
-			};
-
-			return form.Serialize();
 		}
 	}
 }

@@ -32,7 +32,7 @@
   <ItemGroup>
     <Reference Include="Scribe.Core.ConnectorApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d219f6ec67c0e6c3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Downloads\CDK\ConnectorSDK-master-47e6060f7b305531131f43c4c00286ef96ac962f\FastConnectorFramework\Messaging Framework\Samples\Stripe\MyCompany.MessagingConnector.stripdemo\bin\Debug\Scribe.Core.ConnectorApi.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Scribe Software\Scribe Online Agent 13 - SB - Volo\Scribe.Core.ConnectorApi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
