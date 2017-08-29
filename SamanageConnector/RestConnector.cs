@@ -62,6 +62,7 @@ namespace SamanageConnector
 		{
 
 			info.accessToken = properties["AccessToken"];
+            this.QueryProcessor = new QueryProcessor(info);
 			this.IsConnected = true;
 		}
 

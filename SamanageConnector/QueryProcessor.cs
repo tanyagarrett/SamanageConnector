@@ -10,25 +10,13 @@ namespace SamanageConnector
 {
 	public class QueryProcessor
 	{
-        public Connector Connector;
-
-        public QueryProcessor(Connector connector)
-        {
-            Connector = connector;
-        }
-
-		private readonly IDictionary<string, string> connectionInfo;
 		private readonly ISamanageClient samanageClient = new SamanageClient();
-		private const string AccessToken = "Bearer " + "info.accessToken"; //needs updated
+		private readonly string AccessToken; 
 
-		public QueryProcessor(IDictionary<string, string> connectionInfo, ISamanageClient SamanageClient)
+		public QueryProcessor(ConnectionInfo info)
 		{
-
-			this.connectionInfo = connectionInfo;
-			this.samanageClient = SamanageClient;
-
+            this.AccessToken = "Bearer " + info.accessToken;
 		}
-
 
 		public IEnumerable<DataEntity> ExecuteQuery(Query query)
 		{
@@ -58,7 +46,7 @@ namespace SamanageConnector
 
 			List<Hardware> Hardware = new List<Hardware>();
 
-			var hardware = samanageClient.GetHardware(connectionInfo[AccessToken]);
+			var hardware = samanageClient.GetHardware(AccessToken);
 			return hardware.AsQueryable();
 
 		}
